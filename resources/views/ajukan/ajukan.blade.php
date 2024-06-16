@@ -7,141 +7,60 @@
     <title>Ajukan Surat</title>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
     <style>
-        body {
-            background-image: url("images/frame 3.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: "Poppins", sans-serif;
-            padding-bottom: 70px;
-        }
-
-        .form-container {
-            background-color: rgba(255, 255, 255, 0);
-            padding: 20px;
-            border-radius: 10px;
-            width: 40%;
-            max-width: 700px;
-            align-items: center;
-        }
-
-        .form-container p1 {
-            color: #333;
-            font-family: "Poppins", sans-serif;
-            font-size: 12px;
-            display: block;
-            margin-right: 30%;
-        }
-
-        .form-container label {
-            font-family: "Poppins", sans-serif;
-            font-weight: 600;
-            font-size: 20px;
-            margin-bottom: 8px;
-            display: block;
-            text-align: left;
-        }
-
-        .form-container input{
-            width: calc(100% - 30px);
-            height: 50px;
-            padding: 10px 15px;
-            border-radius: 15px;
-            border: 1px solid #cccccc00;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            margin-bottom: 50px;
-            font-family: "Poppins", sans-serif;
-            font-size: 20px;
-            color: #333;
-        }
-        .form-container select {
-            width: calc(100%);
-            height: 50px;
-            padding: 10px 15px;
-            border-radius: 15px;
-            border: 1px solid #cccccc00;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            margin-bottom: 50px;
-            font-family: "Poppins", sans-serif;
-            font-size: 20px;
-            color: #333;
-        }
-
-        .form-container button {
-            background-color: #cbe6ea;
-            color: rgb(0, 0, 0);
-            font-family: "Poppins", sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px 30px;
-            border-radius: 15px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: 0;
-            margin-bottom: 50px;
-            font-weight: 800;
-        }
-
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
+        /* Anda bisa menghapus inline CSS yang tidak diperlukan karena Tailwind akan menangani stylingnya */
     </style>
+    <!-- Tambahkan link ke file app.css yang telah di-compile dengan Tailwind -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite('resources/css/app.css')
 </head>
 
-<body>
-    {{-- @include('component.navbar') --}}
+<body class="bg-gradient-to-r from-blue-200 to-blue-400 min-h-screen flex flex-col justify-center items-center font-poppins">
 
-    <div class="form-container">
-        <form method="POST" action="{{ route('request.store') }}">
+    <div class="form-container bg-white bg-opacity-50 p-6 rounded-lg shadow-lg max-w-md w-full mx-auto">
+        <form method="POST" action="{{ route('request.store') }}" class="space-y-6">
             @csrf
             <div class="mb-4">
-                <label for="namaPengaju">Nama Pengaju</label>
-                <input id="namaPengaju" type="text" placeholder="Nama Lengkap Pengaju" name="namaPengaju" />
+                <label for="namaPengaju" class="block text-sm font-medium text-gray-700">Nama Pengaju</label>
+                <input id="namaPengaju" type="text" placeholder="Nama Lengkap Pengaju" name="namaPengaju"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             </div>
-            <div class="mb-6">
-                <label for="noSurat">Nomor Surat</label>
-                <input id="noSurat" type="text" placeholder="Nomor Surat" name="noSurat">
+            <div class="mb-4">
+                <label for="noSurat" class="block text-sm font-medium text-gray-700">Nomor Surat</label>
+                <input id="noSurat" type="text" placeholder="Nomor Surat" name="noSurat"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             </div>
-            <div class="mb-7">
-                <label for="kategori">Kategori Surat</label>
-                <select id="kategori" name="kategori">
+            <div class="mb-4">
+                <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori Surat</label>
+                <select id="kategori" name="kategori"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     <option value="" disabled selected hidden>Pilih</option>
                     <option value="undangan">Surat Undangan</option>
                     <option value="proposal">Surat Proposal</option>
                     <option value="keterangan">Surat Keterangan</option>
                 </select>
             </div>
-            <div class="mb-8">
-                <label for="perihal">Perihal</label>
-                <input id="perihal" type="text" placeholder="Perihal Surat" name="perihal" />
+            <div class="mb-4">
+                <label for="perihal" class="block text-sm font-medium text-gray-700">Perihal</label>
+                <input id="perihal" type="text" placeholder="Perihal Surat" name="perihal"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             </div>
-            <div class="mb-9">
-                <label for="penerima">Penerima Surat</label>
-                <input id="penerima" type="text" placeholder="Surat Ditujukan Kepada" name="penerima">
+            <div class="mb-4">
+                <label for="penerima" class="block text-sm font-medium text-gray-700">Penerima Surat</label>
+                <input id="penerima" type="text" placeholder="Surat Ditujukan Kepada" name="penerima"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             </div>
-            <p1>Mohon cek kembali surat yang diajukan apakah sudah sesuai dan sudah benar!</p1>
-            <div class="button-container">
-                <button type="submit">
+            <p class="text-sm text-gray-700 mb-4">Mohon cek kembali surat yang diajukan apakah sudah sesuai dan sudah benar!</p>
+            <div class="flex justify-end">
+                <button type="submit"
+                    class="inline-flex justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     Ajukan →
                 </button>
             </div>
         </form>
     </div>
 
-    @include('components.footer')
-
+    <!-- Masukkan footer Anda di sini -->
+@include('component.footer')
 </body>
 
 </html>

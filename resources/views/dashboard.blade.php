@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+    @include('component.navbar')
     dashboard
+    @include('component.footer')
 </body>
 </html>

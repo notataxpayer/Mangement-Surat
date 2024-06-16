@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function index()
+{
+    // Ambil nama pengguna yang sedang login
+    $namaPengguna = Auth::user()->name; // Ganti 'name' dengan kolom yang sesuai dari model User
+
+    // Kirimkan data nama pengguna ke view
+    return view('suratuser.suratuser', ['namaPengguna' => $namaPengguna]);
+}
     public function showLoginForm()
     {
         return view('login.login');

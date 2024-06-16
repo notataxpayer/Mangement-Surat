@@ -9,10 +9,11 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-cover bg-no-repeat bg-fixed flex flex-col justify-center items-center h-screen font-poppins pb-12" style="background-image: url('images/frame 3.png');">
+<body class="bg-cover bg-no-repeat bg-fixed flex flex-col h-screen font-poppins pb-12" style="background-image: url('images/frame 3.png');">
     {{-- @include('component.navbar') --}}
-
-    <div class="bg-transparent p-8 rounded-lg w-2/5 max-w-xl">
+    @include('component.navbar')
+    <div class="flex flex-col justify-center items-center py-32">
+        <div class="bg-transparent  p-8 rounded-lg w-2/5 max-w-xl">
         <form method="POST" action="{{ route('auth') }}">
             @csrf
             <div class="mb-6">
@@ -30,6 +31,8 @@
             </div>
         </form>
     </div>
+    </div>
+    
 
     @include('component.footer')
 </body>

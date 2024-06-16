@@ -8,14 +8,16 @@ use App\Models\KategoriSurat;
 use Illuminate\Http\Request;;
 use Illuminate\Support\Facades\Auth;;
 
-class SuratController extends Controller
+class SuratUserController extends Controller
 {
 
 public function index()
-    {
-        $surats = Surat::with(['user', 'kategoriSurat'])->get();
-        return view('admintableview.index', compact('surats'));
-    }
+{
+    $currentUserId = Auth::id();
+    $surats = Surat::where('idUser', $currentUserId)->get();
+    
+    return view('suratuser.suratuser', compact('surats'));
+}
     
 public function getUserName(Request $request)
     {
@@ -44,32 +46,7 @@ public function getUserName(Request $request)
         return response()->json($Kategori);
     }
 
-    public function updateStatus(Request $request, $id)
-{
-    $surat = Surat::find($id);
-    if (!$surat) {
-        return response()->json(['message' => 'Surat not found'], 404);
-    }
-
-    // Ambil status dari body request
-    $status = $request->input('status');
-
-    // Lakukan validasi status
-    if ($status === 'TRUE') {
-        $surat->status = true; // Ubah status menjadi true (accepted)
-    } elseif ($status === 'FALSE') {
-        $surat->status = false; // Ubah status menjadi false (rejected)
-    } else {
-        return response()->json(['message' => 'Invalid status'], 400);
-    }
-
-    // Simpan perubahan
-    $surat->save();
-
-    return response()->json(['message' => 'Status updated successfully', 'surat' => $surat]);
-}
-
-
+    
     public function create()
     {
         // Tampilkan form pengajuan surat

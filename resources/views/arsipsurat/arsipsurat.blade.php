@@ -4,14 +4,13 @@
     <title>Daftar Surat</title>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 font-poppins">
     @include('component.navbar')
 
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-semibold mb-4 pl-48">List Surat {{ strtoupper(Auth::user()->name) }}</h1>
+        <h1 class="text-3xl font-semibold mb-4 pl-48">List Surat Arsip Admin</h1>
         <div class="overflow-x-auto items-center justify-center flex py-8">
             <table class="table-auto w-9/12 justify-items-center flex-col border-collapse border border-gray-200">
                 <thead>
@@ -23,57 +22,31 @@
                             </button>
                         </th>
                         <th class="px-4 py-2">Nama Pengaju</th>
+                        <th class="px-4 py-2">Nama Penerima</th>
                         <th class="px-4 py-2">Detail</th>
-                        <th class="px-4 py-2">Status</th>
                         <th class="px-4 py-2">Arsipkan</th>
                     </tr>
                 </thead>
                 <tbody>
-    @foreach ($surats as $surat)
-    @php
-        $semuaArsipTrue = true;
-    @endphp
-        @if (!$surat->arsip)
-            @php
-                $semuaArsipTrue = false;
-            @endphp
-            <tr>
-                <td class="border px-4 py-2 text-center">{{ $surat->created_at }}</td>
-                <td class="border px-4 py-2 text-center">{{ $surat->pengirim }}</td>
-                <td class="border px-4 py-2 flex items-center justify-center">
-                    <button class="bg-cust-cream p-1 px-4 text-sm rounded-xl font-bold hover:text-white hover:shadow-md hover:duration-300 transition duration-300 ease-in-out"
-                            onclick="openModal('{{ $surat->idSurat }}', '{{ $surat->nomorsurat }}', '{{ $surat->pengirim }}', '{{ $surat->penerima }}', '{{ $surat->perihal }}', '{{ $surat->idUser }}', '{{ $surat->idKategori }}', '{{ $surat->created_at }}')">
-                        Detail
-                    </button>
-                </td>
-                <td class="border px-2 py-2 text-center items-center">
-                    @if ($surat->status)
-                        <button class="bg-cust-green text-sm p-1 px-4 rounded-xl font-bold hover:text-black hover:bg-cust-greenlight hover:shadow-md text-white hover:duration-300 transition duration-300 ease-in-out"
-                                onclick="confirmAction('{{ $surat->idSurat }}', 'FALSE')">
-                            Accepted
-                        </button>
-                    @else
-                        <button class="bg-cust-red text-sm p-1 px-4 rounded-xl font-bold hover:text-black hover:bg-cust-redlight hover:shadow-md hover:duration-300 transition duration-300 ease-in-out text-white"
-                                onclick="confirmAction('{{ $surat->idSurat }}', 'TRUE')">
-                            Rejected
-                        </button>
-                    @endif
-                </td>
-                <td class="border px-4 py-2 text-center">
-                    <button class="bg-cust-yellow p-1 px-4 rounded-xl text-sm font-bold hover:text-white hover:shadow-md hover:duration-300 transition duration-300 ease-in-out" onclick="confirmActionArsip('{{ $surat->idSurat }}', 'TRUE')">
-                        Arsipkan
-                    </button>
-                </td>
-            </tr>
-           @if ($semuaArsipTrue | count($surats) === 0)
-            <tr>
-                <td colspan="5" class="border px-4 py-2 text-center">DATA KOSONG</td>
-            </tr>
-            @endif
-        @endif
-    @endforeach
-</tbody>
-
+                    @foreach ($surats as $surat)
+                        <tr>
+                            <td class="border px-4 py-2 text-center">{{ $surat->created_at }}</td>
+                            <td class="border px-4 py-2 text-center">{{ $surat->pengirim }}</td>
+                            <td class="border px-4 py-2 text-center">{{ $surat->penerima }}</td>
+                            <td class="border px-4 py-2 flex items-center justify-center">
+                                <button class="bg-cust-cream p-1 px-4 text-sm rounded-xl font-bold hover:text-white hover:shadow-md hover:duration-300 transition duration-300 ease-in-out"
+                                        onclick="openModal('{{ $surat->idSurat }}', '{{ $surat->nomorsurat }}', '{{ $surat->pengirim }}', '{{ $surat->penerima }}', '{{ $surat->perihal }}', '{{ $surat->idUser }}', '{{ $surat->idKategori }}', '{{ $surat->created_at }}')">
+                                    Detail
+                                </button>
+                            </td>
+                            <td class="border px-4 py-2 text-center">
+                                <button class="bg-cust-red text-sm p-1 px-4 rounded-xl font-bold hover:text-black hover:bg-cust-redlight hover:shadow-md hover:duration-300 transition duration-300 ease-in-out text-white" onclick="confirmActionArsip('{{ $surat->idSurat }}', 'FALSE')" >
+                                    Hapus Arsip
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
@@ -206,56 +179,14 @@ function sortTableBy(type) {
     ascending = !ascending;
 }
 
-function confirmAction(idSurat, action) {
-    if (confirm(`Apakah Anda yakin ingin ${action} surat ini?`)) {
-        // Lakukan aksi sesuai konfirmasi
-        updateStatus(idSurat, action);
-    }
-}
 function confirmActionArsip(idSurat, action) {
-    if (confirm(`Apakah Anda yakin ingin ${action} surat ini?`)) {
+    if (confirm(`Apakah Anda yakin ingin merubah status arsip surat ini?`)) {
+        // Lakukan aksi sesuai konfirmasi
         updateStatusArsip(idSurat, action);
     }
 }
 
-function updateStatus(idSurat, action) {
-    const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-    if (!csrfTokenMeta) {
-        console.error('Meta tag CSRF token not found');
-        return;
-    }
-    const csrfToken = csrfTokenMeta.getAttribute('content');
-    
-    // Kirim permintaan ke server untuk mengubah status surat
-    fetch(`/updateStatus/${idSurat}`, {
-        method: 'PUT', // Atau sesuaikan dengan metode yang sesuai
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({ status: action }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Handle respons dari server jika diperlukan
-        console.log('Status surat diperbarui:', action);
-        location.reload()
-        // Misalnya, refresh halaman atau update UI secara dinamis
-        // Di sini Anda bisa menambahkan logika untuk memperbarui UI setelah status berubah
-    })
-    .catch(error => {
-        console.error('Error updating status:', error);
-        // Handle error jika terjadi kesalahan saat mengirim permintaan
-    });
-}
-
-// Update Arsip
-
+//UBAH ARSIP SURAT
 function updateStatusArsip(idSurat, action) {
     const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
     if (!csrfTokenMeta) {
@@ -291,7 +222,6 @@ function updateStatusArsip(idSurat, action) {
         // Handle error jika terjadi kesalahan saat mengirim permintaan
     });
 }
-
 </script>
 @include('component.footer')
 </body>

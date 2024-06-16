@@ -2,16 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuratController;
+use App\Http\Controllers\SuratUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SuratArsipController;
 use App\Http\Controllers\AdminTableViewController;
 
 
 Route::get('/', function () {
-    return view('login');
+    return view('login.login');
 });
-
-Route::get('/surats', [SuratController::class, 'index']);
-
 
 // Route untuk mengambil nama user berdasarkan ID
 Route::get('/getUserName', [SuratController::class, 'getUserName']);
@@ -24,12 +23,17 @@ Route::get('/getCategoryName', [SuratController::class, 'getCategoryName']);
 // Auth::routes();
 
 // Route untuk halaman pengajuan surat
-Route::get('/request', function () {
+// Route::get('/dashboard/request', function () {
+//     return view('ajukan.ajukan');
+// });
+
+Route::get('/dashboard/request', function () {
     return view('ajukan.ajukan');
-});
+})->middleware('App\Http\Middleware\CheckUserLevel:2');
 
 // Route untuk menyimpan form pengajuan surat
-Route::post('/request', [SuratController::class, 'store'])->name('request.store');
+Route::post('/dashboard/request', [SuratController::class, 'store'])->name('request.store')->middleware('App\Http\Middleware\CheckUserLevel:2');
+
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -41,15 +45,21 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth');
 
+//surat user
+// Route::get('/dashboard/suratsaya', [SuratUserController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/suratsaya', [SuratUserController::class, 'index'])
+    ->middleware(['auth', 'App\Http\Middleware\CheckUserLevel:2']);
 
-//route admin surats
-// Route::get('/admintableview', [
-//     'middleware' => 'App\Http\Middleware\AdminMiddleware',
-//     'uses' => 'AdminTableViewController@index',
-// ])->name('admintableview.index');
-
+//admin surat
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function () {
     Route::get('/dashboard/suratadmin', [SuratController::class, 'index']);
     // Tambahkan rute lain yang perlu diakses oleh admin di sini
 });
+Route::put('/updateStatus/{idSurat}', [SuratController::class, 'updateStatus']);
 
+//admin arsip
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function () {
+    Route::get('/dashboard/suratadmin/arsip', [SuratArsipController::class, 'index']);
+    // Tambahkan rute lain yang perlu diakses oleh admin di sini
+});
+Route::put('/updateStatusArsip/{idSurat}', [SuratArsipController::class, 'updateStatusArsip']);

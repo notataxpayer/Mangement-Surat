@@ -12,7 +12,7 @@ class Surat extends Model
     protected $primaryKey = 'idSurat';
 
     protected $fillable = [
-        'nomorsurat', 'pengirim', 'penerima', 'perihal', 'idUser', 'idKategori','created_at'
+        'nomorsurat', 'pengirim', 'penerima', 'perihal', 'idUser', 'idKategori','created_at', 'status', 'arsip'
     ];
 
     public function user()
@@ -24,4 +24,6 @@ class Surat extends Model
     {
         return $this->belongsTo(KategoriSurat::class, 'idKategori', 'idKategori');
     }
+
+    
 }
