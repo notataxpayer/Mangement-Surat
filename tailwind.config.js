@@ -19,6 +19,7 @@ export default {
                 "cust-red": "#DB0000",
                 "cust-redlight": "#FF4141",
                 "cust-yellow": "#FFE45E",
+                "cust-blue": "#94BDC3",
             },
         },
     },

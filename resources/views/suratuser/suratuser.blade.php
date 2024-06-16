@@ -3,6 +3,11 @@
 <head>
     <title>Daftar Surat</title>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <style>
+        .text-opacity {
+            opacity: 0.7; /* Atur opacity sesuai kebutuhan (0.0 - 1.0) */
+        }
+    </style>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 font-poppins">
