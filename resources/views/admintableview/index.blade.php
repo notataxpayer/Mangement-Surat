@@ -14,7 +14,9 @@
             <table class="table-auto w-9/12 justify-items-center flex-col border-collapse border border-gray-200">
                 <thead>
                     <tr class="bg-gray-100">
-                        <th class="px-4 py-2">Tanggal <button class="text-xs bg-cust-cream" onclick="sortTableBy('tanggal')">Y</button></th></th>
+                        <th class="px-4 py-2">Tanggal <button class="text-xs bg-cust-cream" onclick="sortTableBy('tanggal')">
+                            sort
+                        </button></th>
                         <th class="px-4 py-2">Nama Pengaju</th>
                         <th class="px-4 py-2">Detail</th>
                         <th class="px-4 py-2">Status</th>
@@ -98,48 +100,49 @@ fetch('/getAllUser')
     .then(data => {
         // Simpan data pengguna dalam variabel
         users = data;
-        console.log(users)
+        console.log(users);
     })
     .catch(error => console.error('Error:', error));
+
 fetch('/getAllCategory')
     .then(response => response.json())
     .then(data => {
-        // Simpan data pengguna dalam variabel
+        // Simpan data kategori dalam variabel
         kategori = data;
-        console.log(kategori)
+        console.log(kategori);
     })
     .catch(error => console.error('Error:', error));
-    function openModal(idSurat, nomorsurat, pengirim, penerima, perihal, idUser, idKategori, created_at) {
-        document.getElementById("modal-idSurat").innerText = idSurat;
-        document.getElementById("modal-nomorsurat").innerText = nomorsurat;
-        document.getElementById("modal-pengirim").innerText = pengirim;
-        document.getElementById("modal-penerima").innerText = penerima;
-        document.getElementById("modal-perihal").innerText = perihal;
-        document.getElementById("modal-created_at").innerText = created_at;
-         document.getElementById("modal-idUser").innerText = users[idUser];
-         document.getElementById("modal-idKategori").innerText = kategori[idKategori];
 
-        // Memanggil AJAX untuk mengambil nama kategori surat berdasarkan idKategori
+function openModal(idSurat, nomorsurat, pengirim, penerima, perihal, idUser, idKategori, created_at) {
+    console.log('openModal called with:', idSurat, nomorsurat, pengirim, penerima, perihal, idUser, idKategori, created_at);
+    document.getElementById("modal-idSurat").innerText = idSurat;
+    document.getElementById("modal-nomorsurat").innerText = nomorsurat;
+    document.getElementById("modal-pengirim").innerText = pengirim;
+    document.getElementById("modal-penerima").innerText = penerima;
+    document.getElementById("modal-perihal").innerText = perihal;
+    document.getElementById("modal-created_at").innerText = created_at;
+    document.getElementById("modal-idUser").innerText = users[idUser] ? users[idUser] : 'User not found';
+    document.getElementById("modal-idKategori").innerText = kategori[idKategori] ? kategori[idKategori] : 'Category not found';
 
-        document.getElementById("myModal").classList.remove("hidden");
+    document.getElementById("myModal").classList.remove("hidden");
+}
+
+function closeModal() {
+    document.getElementById("myModal").classList.add("hidden");
+}
+
+// Menambahkan event listener untuk menutup modal saat latar belakang modal diklik
+document.addEventListener("click", function(event) {
+    var modal = document.getElementById("myModal");
+    if (event.target === modal) {
+        closeModal();
     }
+});
 
-    function closeModal() {
-        document.getElementById("myModal").classList.add("hidden");
-    }
+//SORTING DATE
+var ascending = true; // Inisialisasi status sorting sebagai ascending
 
-    // Menambahkan event listener untuk menutup modal saat latar belakang modal diklik
-    document.addEventListener("click", function(event) {
-        var modal = document.getElementById("myModal");
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-
-    //SORTING DATE
-    var ascending = true; // Inisialisasi status sorting sebagai ascending
-
-    function sortTableBy(type) {
+function sortTableBy(type) {
     var table, rows, switching, i, x, y, shouldSwitch;
     table = document.querySelector("table");
     switching = true;
@@ -178,9 +181,7 @@ fetch('/getAllCategory')
     // Toggle status sorting
     ascending = !ascending;
 }
-
 </script>
-
 
 </body>
 </html>

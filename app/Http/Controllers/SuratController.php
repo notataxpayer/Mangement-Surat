@@ -33,7 +33,7 @@ public function getUserName(Request $request)
 
     public function getAllUser()
     {
-        $users = User::all()->pluck('name', 'idUser')->toArray();
+        $users = User::all()->pluck('name', 'id')->toArray();
         return response()->json($users);
     }
     public function getAllKategori()
