@@ -9,14 +9,14 @@ class CheckUserLevel
 {
     public function handle($request, Closure $next, $level)
     {
-        // Pastikan user sudah login
+        // Ensure user is authenticated
         if (!Auth::check()) {
             return redirect('/login');
         }
 
-        // Periksa level user
+        // Check user level
         if (Auth::user()->level != $level) {
-            return redirect('/dashboard'); // Atau halaman lain sesuai keinginan
+            return redirect('/dashboard')->withErrors('Anda tidak memiliki akses ke halaman ini.');
         }
 
         return $next($request);

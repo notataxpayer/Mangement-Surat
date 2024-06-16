@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('login.login');
 });
 
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 // Route untuk mengambil nama user berdasarkan ID
 Route::get('/getUserName', [SuratController::class, 'getUserName']);
 Route::get('/getAllUser', [SuratController::class, 'getAllUser']);
@@ -34,11 +38,6 @@ Route::get('/dashboard/request', function () {
 // Route untuk menyimpan form pengajuan surat
 Route::post('/dashboard/request', [SuratController::class, 'store'])->name('request.store')->middleware('App\Http\Middleware\CheckUserLevel:2');
 
-
-
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('auth');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route::get('/admintableview', [AdminTableViewController::class, 'index'])->name('admintableview.index')->middleware('auth');
 Route::get('/dashboard', function () {
@@ -63,3 +62,13 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
     // Tambahkan rute lain yang perlu diakses oleh admin di sini
 });
 Route::put('/updateStatusArsip/{idSurat}', [SuratArsipController::class, 'updateStatusArsip']);
+
+use App\Http\Controllers\DashboardController;
+
+Route::middleware(['auth', 'level:user'])->group(function () {
+    Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+});
+
+// Route for the guest dashboard
+Route::get('/guest-dashboard', [DashboardController::class, 'guestDashboard'])->name('guest.dashboard');
+
