@@ -5,11 +5,12 @@ use App\Http\Controllers\SuratController;
 use App\Http\Controllers\SuratUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SuratArsipController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminTableViewController;
 
 
 Route::get('/', function () {
-    return view('login.login');
+    return view('dashboardview.dashboardGuest');
 });
 
 // Route untuk mengambil nama user berdasarkan ID
@@ -29,10 +30,10 @@ Route::get('/getCategoryName', [SuratController::class, 'getCategoryName']);
 
 Route::get('/dashboard/request', function () {
     return view('ajukan.ajukan');
-})->middleware('App\Http\Middleware\CheckUserLevel:2');
+})->middleware(['auth', 'App\Http\Middleware\CheckUserLevel:2']);
 
 // Route untuk menyimpan form pengajuan surat
-Route::post('/dashboard/request', [SuratController::class, 'store'])->name('request.store')->middleware('App\Http\Middleware\CheckUserLevel:2');
+Route::post('/request/store', [SuratController::class, 'store'])->name('request.store')->middleware('App\Http\Middleware\CheckUserLevel:2');
 
 
 
@@ -63,3 +64,19 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
     // Tambahkan rute lain yang perlu diakses oleh admin di sini
 });
 Route::put('/updateStatusArsip/{idSurat}', [SuratArsipController::class, 'updateStatusArsip']);
+
+//dashboard
+// Route::middleware(['auth', 'App\Http\Middleware\CheckUserLevel:2'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+// });
+// Route::middleware(['auth', 'App\Http\Middleware\CheckUserLevel:1'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+// });
+
+Route::middleware(['auth', 'App\Http\Middleware\CheckUserLevel:2'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
+});
+
+Route::middleware(['auth', 'App\Http\Middleware\CheckUserLevel:1'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+});

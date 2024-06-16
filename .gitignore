@@ -14,7 +14,7 @@ auth.json
 npm-debug.log
 yarn-error.log
 /vendor
-.
+.env
 /.fleet
 /.idea
 /.vscode

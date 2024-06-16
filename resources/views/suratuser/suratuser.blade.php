@@ -16,8 +16,8 @@
     <div class="container mx-auto">
         <div class="container mx-auto">
         <div class="flex flex-row bg-cust-blue bg-opacity-70">
-        <h1 class="text-3xl font-semibold mb-4 pl-48  py-12 w-full">List Surat {{ strtoupper(Auth::user()->name) }}</h1>
-        <h1 class="text-xl text-center font-semibold mr-24 mb-4 pl-48  py-10 text-opacity">Silahkan cek list surat yang telah kamu ajukan ya!</h1>
+            <h1 class="text-3xl font-semibold mb-4 pl-48  py-12 w-full">List Surat {{ strtoupper(Auth::user()->name) }}</h1>
+            <h1 class="text-xl text-center font-semibold mr-24 mb-4 pl-48  py-10 text-opacity">Silahkan cek list surat yang telah kamu ajukan ya!</h1>
     </div>
         <div class="overflow-x-auto items-center justify-center flex py-8">
             <table class="table-auto w-9/12 justify-items-center flex-col border-collapse border border-gray-200 bg-white">

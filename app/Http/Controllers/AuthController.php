@@ -17,6 +17,14 @@ class AuthController extends Controller
     // Kirimkan data nama pengguna ke view
     return view('suratuser.suratuser', ['namaPengguna' => $namaPengguna]);
 }
+    public function indexform()
+{
+    // Ambil nama pengguna yang sedang login
+    $idUser = Auth::user()->idUser; // Ganti 'name' dengan kolom yang sesuai dari model User
+
+    // Kirimkan data nama pengguna ke view
+    return view('ajukan.ajukan', ['idUser' => $idUser]);
+}
     public function showLoginForm()
     {
         return view('login.login');
@@ -58,7 +66,7 @@ class AuthController extends Controller
         if ($user->level == 1) {
             // Jika pengguna memiliki level admin (misalnya level_id = 1)
             Session::put('name', $request->name);
-            return redirect()->intended('/dashboard/suratadmin');
+            return redirect()->intended('/dashboard');
         } 
         elseif ($user->level == 2) {
             // Jika pengguna memiliki level admin (misalnya level_id = 1)

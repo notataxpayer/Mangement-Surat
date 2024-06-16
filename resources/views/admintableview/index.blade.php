@@ -17,7 +17,7 @@
     <div class="flex flex-row bg-cust-blue bg-opacity-70">
         <h1 class="text-3xl font-semibold mb-4 pl-48  py-12 w-full">List Surat {{ strtoupper(Auth::user()->name) }}</h1>
         <h1 class="text-xl text-center font-semibold mr-24 mb-4 pl-48  py-10 text-opacity">Ubah status surat yang diajukan!</h1>
-    </div>
+    </div class="">
         <div class="overflow-x-auto items-center justify-center flex py-8">
             <table class="table-auto w-9/12 justify-items-center flex-col border-collapse border border-gray-200 bg-white bg-opacity-80">
                 <thead>
@@ -34,7 +34,7 @@
                         <th class="px-4 py-2">Arsipkan</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="overflow-y-auto">
     @foreach ($surats as $surat)
     @php
         $semuaArsipTrue = true;
@@ -82,6 +82,46 @@
 
             </table>
         </div>
+         <!-- <div class="flex justify-center mt-4">
+            {{ $surats->links() }} 
+        </div> -->
+        <div class="flex justify-center mt-4">
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <!-- Previous Page Link -->
+        @if ($surats->onFirstPage())
+            <span aria-disabled="true" aria-label="Previous">
+                <span class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-l-md leading-5">Previous</span>
+            </span>
+        @else
+            <a href="{{ $surats->previousPageUrl() }}" class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                Previous
+            </a>
+        @endif
+
+        <!-- Pagination Elements -->
+        @foreach ($surats->getUrlRange($surats->currentPage(), $surats->currentPage() + 2) as $page => $url)
+            @if ($page == $surats->currentPage())
+                <span aria-current="page">
+                    <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5">{{ $page }}</span>
+                </span>
+            @else
+                <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">{{ $page }}</a>
+            @endif
+        @endforeach
+
+        <!-- Next Page Link -->
+        @if ($surats->hasMorePages())
+            <a href="{{ $surats->nextPageUrl() }}" class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                Next
+            </a>
+        @else
+            <span aria-disabled="true" aria-label="Next">
+                <span class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5">Next</span>
+            </span>
+        @endif
+    </nav>
+</div>
+
     </div>
      <!-- Modal -->
     <div id="myModal" class="modal hidden fixed z-10 inset-0 overflow-y-auto">

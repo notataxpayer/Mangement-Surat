@@ -13,7 +13,7 @@ class SuratController extends Controller
 
 public function index()
     {
-        $surats = Surat::with(['user', 'kategoriSurat'])->get();
+        $surats = Surat::with(['user', 'kategoriSurat'])->paginate(5);
         return view('admintableview.index', compact('surats'));
     }
     
@@ -76,27 +76,31 @@ public function getUserName(Request $request)
         return view('request.create');
     }
     public function store(Request $request)
-    {
-        // Validasi data form
-        $validatedData = $request->validate([
-            'pengirim' => 'required|string|max:255',
-            'penerima' => 'required|string|max:255',
-            'nomorsurat' => 'required|string|max:255',
-            'idKategori' => 'required|string',
-            'perihal' => 'required|string|max:255',
-        ]);
+{
+    // Validasi data form
+    $validatedData = $request->validate([
+        'pengirim' => 'required|string|max:255',
+        'penerima' => 'required|string|max:255',
+        'nomorsurat' => 'required|string|max:255',
+        'idKategori' => 'required|string',
+        'perihal' => 'required|string|max:255',
+    ]);
 
-        // Mendapatkan idUser dari user yang sedang login
-        $idUser = Auth::id(); // Mendapatkan id dari user yang sedang login
+    // Mendapatkan idUser dari user yang sedang login
+    $idUser = Auth::id(); // Mendapatkan id dari user yang sedang login
 
-        // Tambahkan idUser ke dalam validatedData
-        $validatedData['idUser'] = $idUser;
+    // Tambahkan idUser ke dalam validatedData
+    $validatedData['idUser'] = $idUser;
 
-        // Simpan data ke database
+    // Simpan data ke database
+    try {
         Surat::create($validatedData);
-
-        // Redirect atau tampilkan pesan sukses
-        return redirect()->back()->with('success', 'Surat berhasil diajukan.');
+        return response()->json(['success' => true, 'message' => 'Surat berhasil diajukan.']);
+    } catch (\Exception $e) {
+        // Tangani error dan kembalikan respons JSON
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
     }
+}
+
 }
 
