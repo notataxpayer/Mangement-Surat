@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminTableViewController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Route::get('/surats', [SuratController::class, 'index']);
@@ -40,3 +40,16 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth');
+
+
+//route admin surats
+// Route::get('/admintableview', [
+//     'middleware' => 'App\Http\Middleware\AdminMiddleware',
+//     'uses' => 'AdminTableViewController@index',
+// ])->name('admintableview.index');
+
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function () {
+    Route::get('/dashboard/suratadmin', [SuratController::class, 'index']);
+    // Tambahkan rute lain yang perlu diakses oleh admin di sini
+});
+
