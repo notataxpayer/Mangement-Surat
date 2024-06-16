@@ -14,9 +14,9 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gradient-to-r from-blue-200 to-blue-400 min-h-screen flex flex-col justify-center items-center font-poppins">
-
-    <div class="form-container bg-white bg-opacity-50 p-6 rounded-lg shadow-lg max-w-md w-full mx-auto">
+<body >
+@include('component.navbar')
+<div class=" min-h-screen flex py-2  font-poppins" style="background-image: url('https://res.cloudinary.com/dnyrrcacd/image/upload/v1718548430/Laravel/Frame_3_b3cxje.png')"><div class="form-container bg-white bg-opacity-80 p-6 rounded-lg shadow-lg max-w-md w-full mx-auto">
         <form method="POST" action="{{ route('request.store') }}" class="space-y-6">
             @csrf
             <div class="mb-4">
@@ -57,7 +57,8 @@
                 </button>
             </div>
         </form>
-    </div>
+    </div></div>
+    
 
     <!-- Masukkan footer Anda di sini -->
 @include('component.footer')
