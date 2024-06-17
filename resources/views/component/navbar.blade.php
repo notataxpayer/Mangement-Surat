@@ -14,21 +14,23 @@
             <div class="relative flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <div class="">
-                        <img src="https://res.cloudinary.com/dnyrrcacd/image/upload/v1718548429/Laravel/logo_xvkhe5.png" href="{{ url('/dashboard') }}" alt="Logo" class="w-[240px] h-auto">
+                        <img src="https://res.cloudinary.com/dnyrrcacd/image/upload/v1718548429/Laravel/logo_xvkhe5.png" href="{{ url('/dashboard') }}" alt="Logo" class="pointer-events-none w-[240px] h-auto">
                     </div>
                     <div class="hidden sm:block sm:ml-6">
                     </div>
                 </div>
-                <!-- <div class="hidden sm:block sm:ml-6" id="loginSection">
-                    <div class="flex space-x-4">
-                        <a id="dashboardLink" href="{{ url('/dashboard') }}" class="hover:text-black duration-300 bg-white px-3 py-2 rounded-md font-bold text-2xl hidden">Dashboard</a>
-                        <a id="loginLogoutButton" href="{{ url('/login') }}" class="hover:text-black duration-300 shadow-sm hover:shadow-lg bg-white px-4 py-2 rounded-md font-bold text-2xl">Login</a>
-                    </div>
-                </div> -->
                 <div class="hidden sm:block sm:ml-6" id="loginSection">
                     <div class="flex space-x-4">
                         @auth
-                            <a id="dashboardLink" href="{{ url('/dashboard') }}" class="hover:text-black duration-300 bg-white shadow-sm hover:shadow-lg hover:outline-black hover:outline-2 px-3 py-2 rounded-md font-bold text-2xl"> <i class="fa fa-sign-out"></i> Dashboard</a>
+                            @if(Auth::user()->isAdmin())
+                                <a id="dashboardLink" href="{{ url('/dashboard/admin') }}" class="hover:text-black duration-300 bg-white shadow-sm hover:shadow-lg hover:outline-black hover:outline-2 px-3 py-2 rounded-md font-bold text-2xl">
+                                    <i class="fa fa-dashboard"></i> Dashboard
+                                </a>
+                            @else
+                                <a id="dashboardLink" href="{{ url('/dashboard') }}" class="hover:text-black duration-300 bg-white shadow-sm hover:shadow-lg hover:outline-black hover:outline-2 px-3 py-2 rounded-md font-bold text-2xl">
+                                    <i class="fa fa-dashboard"></i> Dashboard
+                                </a>
+                            @endif
                             <button id="loginLogoutButton" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="hover:text-black duration-300 shadow-sm hover:shadow-lg bg-white px-4 py-2 rounded-md font-bold text-2xl">
                                 <i class="fa fa-sign-out"></i> Logout
                             </button>                            

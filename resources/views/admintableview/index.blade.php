@@ -13,6 +13,11 @@
 </head>
 <body class="bg-gray-100 font-poppins "style="background-image: url('https://res.cloudinary.com/dnyrrcacd/image/upload/v1718548430/Laravel/Frame_3_b3cxje.png');>
     @include('component.navbar')
+    @if (session('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
     <div class="container mx-auto ">
     <div class="flex flex-row bg-cust-blue bg-opacity-70">
         <h1 class="text-3xl font-semibold mb-4 pl-48  py-12 w-full">List Surat {{ strtoupper(Auth::user()->name) }}</h1>

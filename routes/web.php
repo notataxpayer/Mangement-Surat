@@ -53,14 +53,14 @@ Route::get('/dashboard/suratsaya', [SuratUserController::class, 'index'])
 
 //admin surat
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function () {
-    Route::get('/dashboard/suratadmin', [SuratController::class, 'index']);
+    Route::get('/dashboard/admin/suratadmin', [SuratController::class, 'index']);
     // Tambahkan rute lain yang perlu diakses oleh admin di sini
 });
 Route::put('/updateStatus/{idSurat}', [SuratController::class, 'updateStatus']);
 
 //admin arsip
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function () {
-    Route::get('/dashboard/suratadmin/arsip', [SuratArsipController::class, 'index']);
+    Route::get('/dashboard/admin/suratadmin/arsip', [SuratArsipController::class, 'index']);
     // Tambahkan rute lain yang perlu diakses oleh admin di sini
 });
 Route::put('/updateStatusArsip/{idSurat}', [SuratArsipController::class, 'updateStatusArsip']);
@@ -78,5 +78,9 @@ Route::middleware(['auth', 'App\Http\Middleware\CheckUserLevel:2'])->group(funct
 });
 
 Route::middleware(['auth', 'App\Http\Middleware\CheckUserLevel:1'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+});
+
+Route::get('/404', function () {
+    return view('component.page403');
 });

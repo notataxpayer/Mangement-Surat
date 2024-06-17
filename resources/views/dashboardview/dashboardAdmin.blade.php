@@ -25,7 +25,7 @@
         <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-8">
             <div class="button-container text-center ">
                 <div class="pt-7">
-                    <a href="#" class=" bg-cust-cream hover:bg-white font-semi text-black px-16  text-2xl font-bold py-3 hover:shadow-lg rounded-md shadow-md transition duration-300">
+                    <a href="/dashboard/admin/suratadmin" class=" bg-cust-cream hover:bg-white font-semi text-black px-16  text-2xl font-bold py-3 hover:shadow-lg rounded-md shadow-md transition duration-300">
                     Lihat Surat
                     </a>
                 </div>
@@ -34,7 +34,7 @@
                 </p>
             </div>
             <div class="ml-24 button-container text-center">
-                <a href="#" class="button bg-cust-cream hover:bg-white text-black px-16  text-2xl font-bold py-3 hover:shadow-lg rounded-md shadow-md transition duration-300">
+                <a href="/dashboard/admin/suratadmin/arsip" class="button bg-cust-cream hover:bg-white text-black px-16  text-2xl font-bold py-3 hover:shadow-lg rounded-md shadow-md transition duration-300">
                     Lihat Arsip
                 </a>
                 <p class="ml-8 text-gray-700 mt-8 text-xl opacity-50 font-semibold">

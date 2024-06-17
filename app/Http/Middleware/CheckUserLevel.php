@@ -15,9 +15,14 @@ class CheckUserLevel
         }
 
         // Periksa level user
-        if (Auth::user()->level != $level) {
-            return redirect('/dashboard'); // Atau halaman lain sesuai keinginan
+         if (Auth::user()->level != $level) {
+            // Set session warning
+            session()->flash('warning', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Kembalikan ke halaman sebelumnya
+            return redirect()->back();
         }
+
 
         return $next($request);
     }

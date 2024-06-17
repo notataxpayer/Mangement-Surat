@@ -44,4 +44,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+     public function isAdmin() {
+        return $this->level === 1; // Sesuaikan dengan kolom peran di tabel users
+    }
 }
