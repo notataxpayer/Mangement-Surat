@@ -22,7 +22,7 @@ class Surat extends Model
 
     public function kategoriSurat()
     {
-        return $this->belongsTo(KategoriSurat::class, 'idKategori', 'idKategori');
+        return $this->belongsTo(kategoriSurat::class, 'idKategori', 'idKategori');
     }
 
     

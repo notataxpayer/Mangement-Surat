@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .zoom-125 {
+        zoom: 125%;
+    }
+}

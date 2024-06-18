@@ -22,7 +22,7 @@
 
     <div class="content background-frame bg-cover bg-center pb-20 pt-10 text-center">
         <p class="text-2xl mb-4">LAYANAN SEKOLAH UNTUK MEMPERMUDAH TRACKING DAN PENGAJUAN SURAT</p>
-        <div class="pt-8"><a href="#" class="button bg-cust-cream shadow-md hover:shadow-lg px-12 hover:bg-white  text-black text-2xl py-4 rounded-lg font-bold transition duration-300">
+        <div class="pt-8"><a href="/login" class="button bg-cust-cream shadow-md hover:shadow-lg px-12 hover:bg-white  text-black text-2xl py-4 rounded-lg font-bold transition duration-300">
             Ajukan Surat Sekarang!
         </a></div>
         

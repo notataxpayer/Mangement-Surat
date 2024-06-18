@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-cover bg-no-repeat bg-fixed flex flex-col h-screen font-poppins pb-12" style="background-image: url('images/frame 3.png');">
+<body class="bg-cover bg-no-repeat bg-fixed flex flex-col h-screen font-poppins pb-12" style="background-image: url('https://res.cloudinary.com/dnyrrcacd/image/upload/v1718548430/Laravel/Frame_3_b3cxje.png')">
     {{-- @include('component.navbar') --}}
     @include('component.navbar')
     <div class="flex flex-col justify-center items-center py-32">
@@ -31,10 +31,45 @@
             </div>
         </form>
     </div>
+    <div id="toast" class="fixed top-10 right-10 bg-gray-800 text-white p-4 rounded-md hidden">
+        <p id="toast-message"></p>
+    </div>
     </div>
     
 
     @include('component.footer')
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
 
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Hindari pengiriman form langsung
+
+            // Ambil nilai input
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+
+            // Validasi field tidak boleh kosong
+            if (name.trim() === '' || password.trim() === '') {
+                showToast('Please fill in all fields');
+                return;
+            }
+
+            // Kirim form jika validasi berhasil
+            this.submit();
+        });
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(function() {
+                toast.classList.add('hidden');
+            }, 3000); // Toast akan hilang setelah 3 detik
+        }
+    });
+
+</script>
 </html>
